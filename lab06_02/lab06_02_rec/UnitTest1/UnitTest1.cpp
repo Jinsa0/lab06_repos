@@ -1,4 +1,3 @@
-
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "../lab06_02_rec/lab06_02_rec.cpp"
@@ -10,51 +9,50 @@ namespace UnitTest
     TEST_CLASS(UnitTest)
     {
     public:
-
-        // Перевірка індексів мінімального та максимального елементів.
+        // Перевіряє пошук індексів мінімального та максимального елементів.
         TEST_METHOD(TestFindMinMaxIndexes)
         {
             const int size = 5;
             int a[size] = { 7, -3, 14, 2, -8 };
 
-            int minIndex = 0;
-            int maxIndex = 0;
+            int expectedMinIndex = 4; // елемент -8
+            int expectedMaxIndex = 2; // елемент 14
 
-            FindMinMaxIndexes(a, 0, size, &minIndex, &maxIndex);
+            int actualMinIndex = FindMinIndex(a, size, 1, 0);
+            int actualMaxIndex = FindMaxIndex(a, size, 1, 0);
 
-            Assert::AreEqual(4, minIndex);
-            Assert::AreEqual(2, maxIndex);
+            Assert::AreEqual(expectedMinIndex, actualMinIndex);
+            Assert::AreEqual(expectedMaxIndex, actualMaxIndex);
         }
 
-        // Перевірка, коли мінімум і максимум на краях масиву.
+        // Перевіряє випадок, коли мінімум і максимум на краях масиву.
         TEST_METHOD(TestMinMaxAtEdges)
         {
             const int size = 5;
             int a[size] = { -50, 10, 0, 25, 50 };
 
-            int minIndex = 0;
-            int maxIndex = 0;
-
-            FindMinMaxIndexes(a, 0, size, &minIndex, &maxIndex);
-
-            Assert::AreEqual(0, minIndex);
-            Assert::AreEqual(4, maxIndex);
+            Assert::AreEqual(0, FindMinIndex(a, size, 1, 0));
+            Assert::AreEqual(4, FindMaxIndex(a, size, 1, 0));
         }
 
-        // Перевірка однакових мінімальних і максимальних значень.
+        // Перевіряє, що за однакових значень повертається індекс першого входження.
         TEST_METHOD(TestRepeatedMinMax)
         {
             const int size = 6;
             int a[size] = { 10, -5, 20, -5, 20, 3 };
 
-            int minIndex = 0;
-            int maxIndex = 0;
+            Assert::AreEqual(1, FindMinIndex(a, size, 1, 0));
+            Assert::AreEqual(2, FindMaxIndex(a, size, 1, 0));
+        }
 
-            FindMinMaxIndexes(a, 0, size, &minIndex, &maxIndex);
+        // Перевіряє коректну роботу рекурсії для масиву з одного елемента.
+        TEST_METHOD(TestSingleElement)
+        {
+            const int size = 1;
+            int a[size] = { -7 };
 
-            // Має повертатися індекс першого входження.
-            Assert::AreEqual(1, minIndex);
-            Assert::AreEqual(2, maxIndex);
+            Assert::AreEqual(0, FindMinIndex(a, size, 1, 0));
+            Assert::AreEqual(0, FindMaxIndex(a, size, 1, 0));
         }
     };
 }

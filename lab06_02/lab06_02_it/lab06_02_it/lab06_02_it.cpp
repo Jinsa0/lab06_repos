@@ -13,7 +13,8 @@ using namespace std;
 
 void Create(int* a, const int size, const int Low, const int High);
 void Print(int* a, const int size);
-void FindMinMaxIndexes(int* a, int size, int* minIndex, int* maxIndex);
+int FindMinIndex(int* a, const int size);
+int FindMaxIndex(int* a, const int size);
 
 // Заповнює масив випадковими числами.
 void Create(int* a, const int size, const int Low, const int High)
@@ -32,18 +33,30 @@ void Print(int* a, const int size)
     cout << endl << endl;
 }
 
-// Знаходить індекси мінімального та максимального елементів.
-void FindMinMaxIndexes(int* a, int size, int* minIndex, int* maxIndex)
+int FindMinIndex(int* a, const int size)
 {
+    int minIndex = 0;
     for (int i = 1; i < size; i++)
     {
-        if (a[i] < a[*minIndex])
-            *minIndex = i;
-
-        if (a[i] > a[*maxIndex])
-            *maxIndex = i;
+        if (a[i] < a[minIndex])
+            minIndex = i;
     }
+
+    return minIndex;
 }
+
+int FindMaxIndex(int* a, const int size)
+{
+    int maxIndex = 0;
+    for (int i = 1; i < size; i++)
+    {
+        if (a[i] > a[maxIndex])
+            maxIndex = i;
+    }
+
+    return maxIndex;
+}
+
 
 // Виконує основні дії програми.
 int main() {
@@ -53,7 +66,7 @@ int main() {
     int a[n];
     int Low = -50, High = 50;
 
-    int maxIndex = 0, minIndex = 0;
+    int maxIndex, minIndex;
 
     // 1. Формування та виведення початкового масиву
     Create(a, n, Low, High);
@@ -61,7 +74,8 @@ int main() {
     Print(a, n);
 
     // 2. Знаходимо Індекси мінімального та максимального значення
-    FindMinMaxIndexes(a, n, &minIndex, &maxIndex);
+    minIndex = FindMinIndex(a, n);
+    maxIndex = FindMaxIndex(a, n);
     cout << "Min Index: " << minIndex << ". Min value: " << a[minIndex] << ".\n";
     cout << "Max Index: " << maxIndex << ". Max value: " << a[maxIndex] << ".\n";
 
