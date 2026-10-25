@@ -36,7 +36,7 @@ int Count(int* a, const int size) {
             count++;
         }
     }
-    return count; // повертаємо результат у main, НЕ виводимо через cout всередині!
+    return count; 
 }
 
 int Sum(int* a, const int size) {
