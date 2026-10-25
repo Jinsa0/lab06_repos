@@ -6,79 +6,90 @@
 
 #include <iostream>
 #include <iomanip>
-#include <time.h> 
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
-void Create(int* a, const int size, const int Low, const int High);
-void Print(int* a, const int size);
-int Count(int* a, const int size);
-int Sum(int* a, const int size);
-void Modify(int* a, const int size);
+void Create(int* c, const int size, const int Low, const int High);
+void Print(int* c, const int size);
+int Count(int* c, const int size);
+int Sum(int* c, const int size);
+void Modify(int* c, const int size);
 
-void Create(int* a, const int size, const int Low, const int High) {
+// Заповнює масив випадковими числами.
+void Create(int* c, const int size, const int Low, const int High) {
     for (int i = 0; i < size; i++) {
-        a[i] = Low + rand() % (High - Low + 1);
+        c[i] = Low + rand() % (High - Low + 1);
     }
 }
 
-void Print(int* a, const int size) {
+// Виводить елементи масиву в одному рядку.
+void Print(int* c, const int size) {
     for (int i = 0; i < size; i++) {
-        cout << setw(4) << a[i];
+        cout << setw(4) << c[i];
     }
     cout << endl << endl;
 }
 
-int Count(int* a, const int size) {
+// Підраховує кількість потрібних елементів.
+int Count(int* c, const int size) {
     int count = 0;
+
     for (int i = 0; i < size; i++) {
-        if ((a[i] % 2 == 0) || (i % 8 != 0)) {
+        if (c[i] % 2 == 0 || i % 8 != 0) {
             count++;
         }
     }
-    return count; 
+
+    return count;
 }
 
-int Sum(int* a, const int size) {
+// Обчислює суму потрібних елементів.
+int Sum(int* c, const int size) {
     int sum = 0;
+
     for (int i = 0; i < size; i++) {
-        if ((a[i] % 2 == 0) || (i % 8 != 0)) {
-            sum += a[i];
+        if (c[i] % 2 == 0 || i % 8 != 0) {
+            sum += c[i];
         }
     }
+
     return sum;
 }
 
-void Modify(int* a, const int size) {
+// Замінює потрібні елементи нулями.
+void Modify(int* c, const int size) {
     for (int i = 0; i < size; i++) {
-        if ((a[i] % 2 == 0) || (i % 8 != 0)) {
-            a[i] = 0;
+        if (c[i] % 2 == 0 || i % 8 != 0) {
+            c[i] = 0;
         }
     }
 }
 
+// Виконує основні дії програми.
 int main() {
     srand((unsigned)time(NULL));
 
     const int n = 25;
-    int a[n];
+    int c[n];
     int Low = 5, High = 90;
 
     // 1. Формування та виведення початкового масиву
-    Create(a, n, Low, High);
+    Create(c, n, Low, High);
     cout << "Initial array:\n";
-    Print(a, n);
+    Print(c, n);
 
     // 2. Обчислення кількості та суми за критерієм
-    int count = Count(a, n);
-    int sum = Sum(a, n);
+    int count = Count(c, n);
+    int sum = Sum(c, n);
     cout << "Count = " << count << endl;
     cout << "Sum = " << sum << endl;
 
-    // 3. Заміна елементів нулями та виведення зміненого масиву
-    Modify(a, n);
+    // 3. Заміна елементів нулями та виведення масиву
+    Modify(c, n);
     cout << "Modified array:\n";
-    Print(a, n);
+    Print(c, n);
 
     return 0;
 }

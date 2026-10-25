@@ -10,46 +10,42 @@ namespace UnitTest
     {
     public:
 
-        // 1. Тестування функції Count (обчислення кількості)
+        // Перевіряє підрахунок потрібних елементів.
         TEST_METHOD(TestCount)
         {
             const int size = 5;
-            int a[size] = { 5, 10, 15, 20, 25 };
+            int c[size] = { 5, 10, 15, 20, 25 };
 
             int expectedCount = 4;
-            int actualCount = Count(a, size);
+            int actualCount = Count(c, size);
 
             Assert::AreEqual(expectedCount, actualCount);
         }
 
-        // 2. Тестування функції Sum (обчислення суми)
+        // Перевіряє обчислення суми потрібних елементів.
         TEST_METHOD(TestSum)
         {
             const int size = 5;
-            int a[size] = { 5, 10, 15, 20, 25 };
+            int c[size] = { 5, 10, 15, 20, 25 };
 
-            int expectedSum = 70; // 10 + 15 + 20 + 25
-            int actualSum = Sum(a, size);
+            int expectedSum = 70;
+            int actualSum = Sum(c, size);
 
             Assert::AreEqual(expectedSum, actualSum);
         }
 
-        // 3. Тестування функції Modify (заміна нулями)
+        // Перевіряє заміну потрібних елементів нулями.
         TEST_METHOD(TestModify)
         {
             const int size = 5;
-            int a[size] = { 5, 10, 15, 20, 25 };
+            int c[size] = { 5, 10, 15, 20, 25 };
 
-            Modify(a, size);
+            int expected[size] = { 5, 0, 0, 0, 0 };
 
-            // Перший елемент не підпадає під умову, тому залишається без змін
-            Assert::AreEqual(5, a[0]);
+            Modify(c, size);
 
-            // Всі інші підпадають, тому мають стати нулями
-            Assert::AreEqual(0, a[1]);
-            Assert::AreEqual(0, a[2]);
-            Assert::AreEqual(0, a[3]);
-            Assert::AreEqual(0, a[4]);
+            for (int i = 0; i < size; i++)
+                Assert::AreEqual(expected[i], c[i]);
         }
     };
 }
