@@ -16,7 +16,7 @@ void Print(int* a, const int size);
 void FindMinMaxIndexes(int* a, int size, int* minIndex, int* maxIndex);
 
 // Заповнює масив випадковими числами.
-void Create(int* a, const int size, const int Low, const int High) 
+void Create(int* a, const int size, const int Low, const int High)
 {
     for (int i = 0; i < size; i++) {
         a[i] = Low + rand() % (High - Low + 1);
@@ -24,7 +24,7 @@ void Create(int* a, const int size, const int Low, const int High)
 }
 
 // Виводить елементи масиву в одному рядку.
-void Print(int* a, const int size) 
+void Print(int* a, const int size)
 {
     for (int i = 0; i < size; i++) {
         cout << setw(6) << a[i];
@@ -33,23 +33,16 @@ void Print(int* a, const int size)
 }
 
 // Знаходить індекси мінімального та максимального елементів.
-void FindMinMaxIndexes(int* a, int size, int* minIndex, int* maxIndex) 
+void FindMinMaxIndexes(int* a, int size, int* minIndex, int* maxIndex)
 {
-    int currentMax = 0;
     for (int i = 1; i < size; i++)
     {
-        if (a[i] > a[currentMax])
-            currentMax = i;
-    }
-    *maxIndex = currentMax;
+        if (a[i] < a[*minIndex])
+            *minIndex = i;
 
-    int currentMin = 0;
-    for (int i = 1; i < size; i++)
-    {
-        if (a[i] < a[currentMin])
-            currentMin = i;
+        if (a[i] > a[*maxIndex])
+            *maxIndex = i;
     }
-    *minIndex = currentMin;
 }
 
 // Виконує основні дії програми.
@@ -59,7 +52,7 @@ int main() {
     const int n = 20;
     int a[n];
     int Low = -50, High = 50;
-    
+
     int maxIndex = 0, minIndex = 0;
 
     // 1. Формування та виведення початкового масиву
