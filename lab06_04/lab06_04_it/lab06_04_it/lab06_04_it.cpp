@@ -44,7 +44,7 @@ int AbsMaxIndex(const double* a, const int size)
     int maxIdx = 0;
     for (int i = 1; i < size; i++)
     {
-        if (abs(a[i]) > abs(a[maxIdx]))
+        if (fabs(a[i]) > fabs(a[maxIdx]))
             maxIdx = i;
     }
     return maxIdx + 1; // НОМЕР = індекс + 1
