@@ -1,7 +1,7 @@
 // lab06_04_it.cpp
 // Кіц Роман Романович
 // Лабораторна робота № 6.4 іт
-// Опрацювання та впорядкування одновимірних динамічних масивів.
+// Опрацювання та впорядкування одновимірних динамічних масивів (ітераційний спосіб).
 // Варіант 12
 
 #include <iostream>
@@ -17,6 +17,7 @@ void Create(double* a, const int size, const double Low, const double High);
 void Print(const double* a, const int size);
 int AbsMaxIndex(const double* a, const int size);
 double SumAfterFirstPositive(const double* a, const int size);
+void Shift(double* a, const int start, const int end);
 void TransformArray(double* a, const int size, const int a_val, const int b_val);
 void FreeMemory(double*& a);
 
@@ -73,33 +74,31 @@ double SumAfterFirstPositive(const double* a, const int size)
     return sum;
 }
 
-// 5. Перетворення масиву за цілою частиною в інтервалі [a, b]
+// 5.1. Зсуває елементи проміжку вправо на одну позицію (звільняє місце на start)
+void Shift(double* a, const int start, const int end)
+{
+    for (int k = end; k > start; k--)
+        a[k] = a[k - 1];
+}
+
+// 5. Перетворення масиву in-place зі збереженням відносного порядку
 void TransformArray(double* a, const int size, const int a_val, const int b_val)
 {
-    double* temp = new double[size]();
-    int k = 0;
-
-    // Перший прохід: елементи, ціла частина яких в інтервалі [a, b]
+    int targetPos = 0;
     for (int i = 0; i < size; i++)
     {
         int intPart = (int)a[i];
         if (intPart >= a_val && intPart <= b_val)
-            temp[k++] = a[i];
+        {
+            if (i > targetPos)
+            {
+                double current = a[i];
+                Shift(a, targetPos, i);
+                a[targetPos] = current;
+            }
+            targetPos++;
+        }
     }
-
-    // Другий прохід: всі інші елементи
-    for (int i = 0; i < size; i++)
-    {
-        int intPart = (int)a[i];
-        if (intPart < a_val || intPart > b_val)
-            temp[k++] = a[i];
-    }
-
-    // Скопіювати назад у вихідний масив
-    for (int i = 0; i < size; i++)
-        a[i] = temp[i];
-
-    delete[] temp;
 }
 
 // 6. Звільнення динамічної пам'яті
@@ -112,11 +111,9 @@ void FreeMemory(double*& a)
 int main()
 {
     srand((unsigned)time(NULL));
-
     int n;
     cout << "n = ";
     cin >> n;
-
     if (n <= 0)
     {
         cout << "Invalid array size!" << endl;
@@ -125,10 +122,8 @@ int main()
 
     // Створення динамічного масиву
     double* a = new double[n];
-
     double Low = -50.0, High = 50.0;
     Create(a, n, Low, High);
-
     cout << "\nInitial array a:" << endl;
     Print(a, n);
 
@@ -146,13 +141,18 @@ int main()
     cout << "a = "; cin >> a_val;
     cout << "b = "; cin >> b_val;
 
-    TransformArray(a, n, a_val, b_val);
+    if (a_val > b_val)
+    {
+        cout << "Invalid interval!" << endl;
+        FreeMemory(a);
+        return 1;
+    }
 
+    TransformArray(a, n, a_val, b_val);
     cout << "\nModified array a:" << endl;
     Print(a, n);
 
     // Звільнення пам'яті
     FreeMemory(a);
-
     return 0;
 }
