@@ -82,7 +82,7 @@ double SumRecursive(const double* a, int i, const int size)
     return a[i] + SumRecursive(a, i + 1, size);
 }
 
-// 4. Обчислення суми елементів після першого додатного (без зайвих параметрів)
+// 4. Обчислення суми елементів після першого додатного 
 double SumAfterFirstPositive(const double* a, const int size)
 {
     int firstPosIdx = FindFirstPositive(a, 0, size);

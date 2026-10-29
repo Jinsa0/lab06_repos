@@ -40,7 +40,7 @@ int Count(int* c, int i, const int size) {
     if (i == size)
         return 0;
 
-    if (c[i] % 2 == 0 || i % 8 != 0)
+    if (c[i] % 2 == 0 || !(i % 8 == 0))
         return 1 + Count(c, i + 1, size);
 
     return Count(c, i + 1, size);
@@ -51,7 +51,7 @@ int Sum(int* c, int i, const int size) {
     if (i == size)
         return 0;
 
-    if (c[i] % 2 == 0 || i % 8 != 0)
+    if (c[i] % 2 == 0 || !(i % 8 == 0))
         return c[i] + Sum(c, i + 1, size);
 
     return Sum(c, i + 1, size);
@@ -59,7 +59,7 @@ int Sum(int* c, int i, const int size) {
 
 // Рекурсивно замінює потрібні елементи нулями.
 void Modify(int* c, int i, const int size) {
-    if (c[i] % 2 == 0 || i % 8 != 0) {
+    if (c[i] % 2 == 0 || !(i % 8 == 0)) {
         c[i] = 0;
     }
 
